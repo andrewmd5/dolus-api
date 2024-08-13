@@ -296,13 +296,13 @@ jobs:
           
           ID=$(echo "$BODY" | jq -r .id)
           VERSION=$(echo "$BODY" | jq -r .version)
-          echo "$BODY" | jq -r .module | base64 --decode > "${ID}-${VERSION}.mod"
+          echo "$BODY" | jq -r .module | base64 --decode > "${ID}-${VERSION}.dlsm"
 
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ steps.sign_module.outputs.ID }}-${{ steps.sign_module.outputs.VERSION }}.mod"
-          artifactContentType: application/octet-stream
+          artifacts: "${{ steps.sign_module.outputs.ID }}-${{ steps.sign_module.outputs.VERSION }}.dlsm"
+          artifactContentType: application/dolus-module
           bodyFile: "CHANGELOG.md"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
